@@ -1,0 +1,9 @@
+<resources>
+    <string name="sort_option_selector_title">Sorting</string>
+    <string name="sort_option_selector_ascending">Ascending</string>
+    <string name="sort_option_selector_descending">Descending</string>
+    <string name="action_apply">Apply</string>
+    <string name="rates_sort_option_name">Brand</string>
+    <string name="rates_sort_option_price">Price</string>
+    <string name="rates_sort_option_size">Size</string>
+</resources>
