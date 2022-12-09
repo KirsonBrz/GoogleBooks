@@ -1,8 +1,8 @@
 package com.kirson.googlebooks.di
 
-import com.kirson.googlebooks.MainModel
-import com.kirson.googlebooks.MainModelImpl
-import com.kirson.googlebooks.MainRepository
+import com.kirson.googlebooks.HomeModel
+import com.kirson.googlebooks.HomeModelImpl
+import com.kirson.googlebooks.HomeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ object DomainModule {
 
     @Singleton
     @Provides
-    fun provideMainModel(mainRepository: MainRepository): MainModel =
-        MainModelImpl(mainRepository)
+    fun provideMainModel(homeRepository: HomeRepository): HomeModel =
+        HomeModelImpl(homeRepository)
 
 }

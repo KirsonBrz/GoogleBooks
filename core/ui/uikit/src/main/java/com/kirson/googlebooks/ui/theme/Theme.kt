@@ -29,8 +29,8 @@ fun GoogleBooksTheme(
     val sysUiController = rememberSystemUiController()
     SideEffect {
     sysUiController.setSystemBarsColor(
-      color = Color.Transparent,
-      darkIcons = true,
+        color = if (useDarkTheme) Color.DarkGray else Color.LightGray,
+        darkIcons = true,
     )
   }
 

@@ -14,6 +14,7 @@ fun NavigationComponent(
     navigator: Navigator,
 ) {
 
+
     LaunchedEffect("navigation") {
         navigator.sharedFlow.onEach {
             navController.navigate(it.route) {

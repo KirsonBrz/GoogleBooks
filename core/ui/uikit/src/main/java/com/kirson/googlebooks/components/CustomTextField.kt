@@ -51,13 +51,14 @@ fun CustomTextField(
             ) {
                 if (leadingIcon != null) leadingIcon()
                 Box(Modifier.weight(1f)) {
-                    if (text.isEmpty()) Text(
-                        placeholderText,
-                        style = LocalTextStyle.current.copy(
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                            fontSize = fontSize
+                    if (text.isEmpty())
+                        Text(
+                            placeholderText,
+                            style = LocalTextStyle.current.copy(
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                                fontSize = fontSize
+                            )
                         )
-                    )
                     innerTextField()
                 }
                 if (trailingIcon != null) trailingIcon()

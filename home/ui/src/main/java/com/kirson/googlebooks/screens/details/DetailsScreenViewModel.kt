@@ -3,23 +3,18 @@ package com.kirson.googlebooks.screens.details
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.kirson.googlebooks.MainModel
+import com.kirson.googlebooks.HomeModel
 import com.kirson.googlebooks.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
-    private val mainModel: MainModel
+    private val homeModel: HomeModel
 ) : BaseViewModel<DetailsScreenViewModel>() {
 
     private var _uiState = mutableStateOf<DetailsScreenUIState>(DetailsScreenUIState.Initial)

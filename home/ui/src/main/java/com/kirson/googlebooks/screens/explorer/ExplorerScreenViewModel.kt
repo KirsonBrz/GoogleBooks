@@ -3,9 +3,8 @@ package com.kirson.googlebooks.screens.explorer
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.viewModelScope
-import com.kirson.googlebooks.MainModel
+import com.kirson.googlebooks.HomeModel
 import com.kirson.googlebooks.core.base.BaseViewModel
-import com.kirson.googlebooks.core.entity.SortConfiguration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -22,8 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExplorerScreenViewModel @Inject constructor(
-    private val mainModel: MainModel,
+    private val homeModel: HomeModel,
 ) : BaseViewModel<ExplorerScreenViewModel>() {
+
 
     private var _uiState = mutableStateOf<ExplorerScreenUIState>(ExplorerScreenUIState.Initial)
     val uiState: State<ExplorerScreenUIState>
@@ -34,7 +34,7 @@ class ExplorerScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(IO) {
-            //mainModel.getAllPhones()
+            homeModel.getBooks("Kant")
             observeData()
         }
     }
@@ -42,40 +42,40 @@ class ExplorerScreenViewModel @Inject constructor(
 
     fun observeData() {
         viewModelScope.launch(IO) {
-//
-//            val phones = mainModel.allPhones
-//            phones.flowOn(IO).onStart {
-//                withContext(Dispatchers.Main) {
-//                    _uiState.value = ExplorerScreenUIState.Loading(
-//                        State().copy(
-//                            refreshInProgress = true
-//                        )
-//                    )
-//                }
-//            }.flowOn(IO).onCompletion {
-//                _uiState.value = ExplorerScreenUIState.Loaded(
-//                    State().copy(
-//                        refreshInProgress = false,
-//                    )
-//                )
-//
-//            }.flowOn(IO).catch {
-//                _uiState.value = ExplorerScreenUIState.Error(
-//                    State().copy(
-//                        message = "$it"
-//                    )
-//                )
-//
-//            }.flowOn(IO).collect { phonesList ->
-//                _uiState.value = ExplorerScreenUIState.Loaded(
-//                    State().copy(
-//                        homeStorePhones = phonesList.homeStoreList,
-//                        bestSellersPhones = phonesList.bestSellerList,
-//                        refreshInProgress = false
-//                    )
-//                )
-//
-//            }
+
+            val books = homeModel.books
+
+            books.flowOn(IO).onStart {
+                withContext(Dispatchers.Main) {
+                    _uiState.value = ExplorerScreenUIState.Loading(
+                        State().copy(
+                            refreshInProgress = true
+                        )
+                    )
+                }
+            }.flowOn(IO).onCompletion {
+                _uiState.value = ExplorerScreenUIState.Loaded(
+                    State().copy(
+                        refreshInProgress = false,
+                    )
+                )
+
+            }.flowOn(IO).catch {
+                _uiState.value = ExplorerScreenUIState.Error(
+                    State().copy(
+                        message = "$it"
+                    )
+                )
+
+            }.flowOn(IO).collect { booksDomainModel ->
+                _uiState.value = ExplorerScreenUIState.Loaded(
+                    State().copy(
+                        books = booksDomainModel.books,
+                        refreshInProgress = false
+                    )
+                )
+
+            }
 
         }
     }
@@ -109,6 +109,15 @@ class ExplorerScreenViewModel @Inject constructor(
 
         }
         //mainModel.applyCategory(category)
+
+    }
+
+    fun loadBooks(searchQuery: String) {
+
+        viewModelScope.launch(IO) {
+            homeModel.getBooks(searchQuery)
+        }
+
 
     }
 

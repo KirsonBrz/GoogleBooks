@@ -1,32 +1,27 @@
 package com.kirson.googlebooks.mappers
 
+import com.kirson.googlebooks.entity.BookDomainModel
+import com.kirson.googlebooks.entity.BookNetworkModel
+import com.kirson.googlebooks.entity.BooksListDomainModel
+import com.kirson.googlebooks.entity.BooksListNetworkModel
 
-//fun PhonesNetworkModel.toDomainModel(): PhonesDomainModel = PhonesDomainModel(
-//    bestSellerList = this.bestSellerList.toDomainBestSellers(),
-//    homeStoreList = this.homeStoreList.toDomainHomeStores()
-//)
-//
-//fun PhoneDetailNetworkModel.toDomainModel(): PhoneDetailDomainModel =
-//    PhoneDetailDomainModel(
-//        CPU = this.CPU,
-//        camera = this.camera,
-//        capacity = this.capacity,
-//        color = this.color,
-//        id = this.id,
-//        images = this.images,
-//        isFavorites = this.isFavorites,
-//        price = this.price,
-//        rating = this.rating,
-//        sd = this.sd,
-//        ssd = this.ssd,
-//        title = this.title
-//    )
-//
-//fun CartNetworkModel.toDomainModel(): CartDomainModel =
-//    CartDomainModel(
-//        cartPhonesList = this.cartPhonesList.toDomainBaskets(),
-//        delivery = this.delivery,
-//        id = this.id,
-//        total = this.total
-//    )
-//
+
+fun BooksListNetworkModel.toDomainModel(): BooksListDomainModel = BooksListDomainModel(
+    books = this.books?.toDomainBooks(),
+    kind = this.kind,
+    totalItems = this.totalItems
+)
+
+
+fun List<BookNetworkModel>.toDomainBooks(): List<BookDomainModel> =
+    this.map {
+        BookDomainModel(
+            title = it.bookInfoNetworkModel.title,
+            authors = it.bookInfoNetworkModel.authors,
+            description = it.bookInfoNetworkModel.description,
+            smallImage = it.bookInfoNetworkModel.imageLinks?.smallThumbnail,
+            largeImage = it.bookInfoNetworkModel.imageLinks?.thumbnail,
+            pageCount = it.bookInfoNetworkModel.pageCount,
+            publishedDate = it.bookInfoNetworkModel.publishedDate,
+        )
+    }

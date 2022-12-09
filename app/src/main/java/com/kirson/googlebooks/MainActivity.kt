@@ -17,9 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kirson.googlebooks.components.BottomNavigationBar
 import com.kirson.googlebooks.navigation.InitialScreen
-import com.kirson.googlebooks.navigation.NavTarget
 import com.kirson.googlebooks.navigation.Navigator
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +60,7 @@ fun MainScreenContent() {
     Scaffold(
         backgroundColor = GoogleBooksTheme.colors.backgroundPrimary,
         topBar = {
+
         },
         bottomBar = {
 
