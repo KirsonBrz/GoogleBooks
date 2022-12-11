@@ -1,6 +1,7 @@
 package com.kirson.googlebooks
 
 import com.kirson.googlebooks.core.entity.mapDistinctNotNullChanges
+import com.kirson.googlebooks.core.utils.swapToCategoryPrefix
 import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.entity.BooksListDomainModel
 import com.kirson.googlebooks.mappers.toDomainModel
@@ -19,6 +20,7 @@ class HomeModelImpl @Inject constructor(
 
     data class State(
         val books: BooksListDomainModel? = null,
+        val searchQuery: String? = null,
         val selectedBookTitle: String? = null,
     )
 
@@ -31,6 +33,10 @@ class HomeModelImpl @Inject constructor(
             it.books?.books?.find { book ->
                 book.title == it.selectedBookTitle
             }
+        }.flowOn(Dispatchers.IO)
+    override val searchQuery: Flow<String>
+        get() = stateFlow.mapDistinctNotNullChanges {
+            it.searchQuery
         }.flowOn(Dispatchers.IO)
 
 
@@ -45,7 +51,8 @@ class HomeModelImpl @Inject constructor(
 
         stateFlow.update { state ->
             state.copy(
-                books = books
+                books = books,
+                searchQuery = searchQuery.swapToCategoryPrefix()
             )
         }
 

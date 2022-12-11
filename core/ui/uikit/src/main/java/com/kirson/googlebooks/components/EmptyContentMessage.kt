@@ -37,7 +37,7 @@ fun EmptyContentMessage(
     )
     Text(
         text = title,
-        color = GoogleBooksTheme.colors.black,
+        color = GoogleBooksTheme.colors.contendAccentTertiary,
         style = TextStyle(
             fontWeight = FontWeight.Medium,
             fontSize = 17.sp,
@@ -47,7 +47,7 @@ fun EmptyContentMessage(
     Text(
         modifier = Modifier.padding(top = 4.dp),
         text = description,
-        color = GoogleBooksTheme.colors.black,
+        color = GoogleBooksTheme.colors.contendAccentTertiary,
         style = TextStyle(
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,

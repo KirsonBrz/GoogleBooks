@@ -2,6 +2,7 @@ package com.kirson.googlebooks.screens.explorer
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.kirson.googlebooks.HomeModel
 import com.kirson.googlebooks.core.base.BaseViewModel
@@ -11,6 +12,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -34,7 +36,7 @@ class ExplorerScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(IO) {
-            homeModel.getBooks("Kant")
+
             observeData()
         }
     }
@@ -44,8 +46,11 @@ class ExplorerScreenViewModel @Inject constructor(
         viewModelScope.launch(IO) {
 
             val books = homeModel.books
+            val searchQuery = homeModel.searchQuery
 
-            books.flowOn(IO).onStart {
+            val combineFlow = combine(books, searchQuery, ::Pair)
+
+            combineFlow.flowOn(IO).onStart {
                 withContext(Dispatchers.Main) {
                     _uiState.value = ExplorerScreenUIState.Loading(
                         State().copy(
@@ -67,10 +72,11 @@ class ExplorerScreenViewModel @Inject constructor(
                     )
                 )
 
-            }.flowOn(IO).collect { booksDomainModel ->
+            }.flowOn(IO).collect { combineData ->
                 _uiState.value = ExplorerScreenUIState.Loaded(
                     State().copy(
-                        books = booksDomainModel.books,
+                        books = combineData.first.books,
+                        searchQuery = TextFieldValue(combineData.second),
                         refreshInProgress = false
                     )
                 )

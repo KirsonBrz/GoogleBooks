@@ -35,10 +35,12 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.kirson.googlebooks.core.utils.SearchState
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
-import com.kirson.googlebooks.utils.SearchState
 
 
 @Composable
@@ -161,12 +163,28 @@ fun SearchTextField(
                             .focusRequester(focusRequester)
                             .padding(top = 9.dp, bottom = 8.dp, start = 24.dp, end = 8.dp),
                         singleLine = true,
-                        textStyle = TextStyle(color = GoogleBooksTheme.colors.contendAccentTertiary),
+                        textStyle = TextStyle(
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.W500,
+                            color = GoogleBooksTheme.colors.contendAccentTertiary
+                        ),
                         cursorBrush = SolidColor(Color.LightGray),
                     )
 
                     when {
-
+                        searching -> {
+//                            CircularProgressIndicator(
+//                                modifier = Modifier
+//                                    .padding(10.dp)
+//                                    .size(24.dp),
+//                                color = GoogleBooksTheme.colors.contendAccentTertiary
+//                            )
+                            ProgressIndicator(
+                                modifier = Modifier
+                                    .padding(all = 10.dp)
+                                    .weight(0.15f)
+                            )
+                        }
 
                         query.text.isNotEmpty() && focused -> {
                             IconButton(onClick = onClearQuery) {

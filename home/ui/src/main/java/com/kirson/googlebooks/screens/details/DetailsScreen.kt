@@ -14,11 +14,12 @@ import androidx.compose.ui.Modifier
 import com.kirson.googlebooks.components.BookDetails
 import com.kirson.googlebooks.components.ConnectivityStatus
 import com.kirson.googlebooks.components.EmptyContentMessage
+import com.kirson.googlebooks.core.utils.ConnectionState
+import com.kirson.googlebooks.core.utils.connectivityState
 import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.home.ui.R
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
-import com.kirson.googlebooks.utils.ConnectionState
-import com.kirson.googlebooks.utils.connectivityState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @Composable
@@ -39,6 +40,7 @@ fun DetailsScreen(
 
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 private fun DetailsContent(
     uiState: DetailsScreenUIState,
@@ -126,8 +128,6 @@ private fun ScreenSlot(
     Column(
         modifier = Modifier.statusBarsPadding()
     ) {
-
-
 
         ConnectivityStatus(isConnected = isConnected, onBackOnline = { })
         Box(

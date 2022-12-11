@@ -21,11 +21,11 @@ import com.kirson.googlebooks.ui.theme.Shapes
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-internal fun MainModalBottomSheetScaffold(
+internal fun ExplorerBottomSheetScaffold(
     state: State,
-    content: @Composable () -> Unit,
     applySelectCategory: (String) -> Unit,
-    dismissSelectCategory: () -> Unit
+    dismissSelectCategory: () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val sheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,

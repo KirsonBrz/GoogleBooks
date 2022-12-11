@@ -36,12 +36,12 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.kirson.googlebooks.core.utils.lerp
+import com.kirson.googlebooks.core.utils.toHttpsPrefix
 import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
-import com.kirson.googlebooks.utils.toHttpsPrefix
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.math.roundToInt
 
 
 private val GradientScroll = 180.dp
@@ -85,8 +85,8 @@ private fun Up(upPress: () -> Unit) {
         onClick = upPress,
         modifier = Modifier
             .statusBarsPadding()
-            .padding(horizontal = 16.dp, vertical = 10.dp)
-            .size(36.dp)
+            .padding(20.dp)
+            .size(24.dp)
             .background(
                 color = GoogleBooksTheme.colors.backgroundPrimary,
                 shape = CircleShape
@@ -241,6 +241,3 @@ private fun CollapsingImageLayout(
     }
 }
 
-fun lerp(start: Int, stop: Int, fraction: Float): Int {
-    return start + ((stop - start) * fraction.toDouble()).roundToInt()
-}

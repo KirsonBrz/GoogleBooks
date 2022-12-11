@@ -1,4 +1,4 @@
-package com.kirson.googlebooks.utils
+package com.kirson.googlebooks.core.utils
 
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue

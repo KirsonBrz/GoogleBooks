@@ -1,4 +1,4 @@
-package com.kirson.googlebooks.utils
+package com.kirson.googlebooks.core.utils
 
 sealed class ConnectionState {
     object Available : ConnectionState()

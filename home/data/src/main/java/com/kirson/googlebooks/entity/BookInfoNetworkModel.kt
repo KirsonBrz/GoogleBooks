@@ -3,7 +3,7 @@ package com.kirson.googlebooks.entity
 data class BookInfoNetworkModel(
     val allowAnonLogging: Boolean?,
     val authors: List<String>?,
-    val averageRating: Int?,
+    val averageRating: Float?,
     val canonicalVolumeLink: String?,
     val categories: List<String>?,
     val contentVersion: String?,
