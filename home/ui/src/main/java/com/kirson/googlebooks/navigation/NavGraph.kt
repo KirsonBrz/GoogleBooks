@@ -11,7 +11,7 @@ import com.kirson.googlebooks.screens.explorer.ExplorerScreenViewModel
 
 fun NavGraphBuilder.addHomeGraph(
     popBackStack: () -> Unit,
-    onPhoneDetails: () -> Unit
+    navigateToDetails: () -> Unit
 ) {
     navigation(
         startDestination = NavTarget.Explorer.route,
@@ -19,7 +19,7 @@ fun NavGraphBuilder.addHomeGraph(
     ) {
         composable(NavTarget.Explorer.route) {
             val viewModel: ExplorerScreenViewModel = hiltViewModel()
-            ExplorerScreen(viewModel, onPhoneDetails = onPhoneDetails)
+            ExplorerScreen(viewModel, navigateToDetails = navigateToDetails)
         }
         composable(NavTarget.Details.route) {
             val viewModel: DetailsScreenViewModel = hiltViewModel()

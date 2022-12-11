@@ -28,11 +28,11 @@ fun NavigationComponent(
     ) {
         addHomeGraph(
             popBackStack = { navController.popBackStack() },
-            onPhoneDetails = {
+            navigateToDetails = {
                 navController.navigate(NavTarget.Details.route)
             },
 
-        )
+            )
 
     }
 }

@@ -1,33 +1,20 @@
 package com.kirson.googlebooks.screens.details
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.kirson.googlebooks.components.BookDetails
 import com.kirson.googlebooks.components.ConnectivityStatus
 import com.kirson.googlebooks.components.EmptyContentMessage
-import com.kirson.googlebooks.components.TopAppBar
+import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.home.ui.R
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 import com.kirson.googlebooks.utils.ConnectionState
@@ -47,9 +34,6 @@ fun DetailsScreen(
         uiState = uiState,
         uiStateFlow = uiStateFlow,
         onBackScreen = { onBackScreen() },
-        onBackOnline = {
-            //viewModel.getData()
-        }
     )
 
 
@@ -60,7 +44,6 @@ private fun DetailsContent(
     uiState: DetailsScreenUIState,
     uiStateFlow: State,
     onBackScreen: () -> Unit,
-    onBackOnline: () -> Unit
 ) {
     val connection by connectivityState()
 
@@ -85,16 +68,11 @@ private fun DetailsContent(
         is DetailsScreenUIState.Loaded -> {
             ScreenSlot(
                 isConnected = isConnected,
-                onBackOnline = onBackOnline,
-                onBackScreen = onBackScreen
             ) {
-                if (false
-                    //uiState.state.phoneDetails != null
-                ) {
+                if (uiState.state.book != null) {
                     ContentDetailsReady(
-                        state = uiStateFlow,
-                        //phoneDetails = uiState.state.phoneDetails,
-
+                        book = uiState.state.book,
+                        onBackScreen = onBackScreen
                     )
                 } else {
                     EmptyContentMessage(
@@ -109,8 +87,6 @@ private fun DetailsContent(
         is DetailsScreenUIState.Loading -> {
             ScreenSlot(
                 isConnected = isConnected,
-                onBackScreen = onBackScreen,
-                onBackOnline = onBackOnline
             ) {
                 ContentLoadingState()
             }
@@ -121,8 +97,9 @@ private fun DetailsContent(
 
 @Composable
 private fun ContentDetailsReady(
-    state: State,
     modifier: Modifier = Modifier,
+    book: BookDomainModel,
+    onBackScreen: () -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -130,6 +107,7 @@ private fun ContentDetailsReady(
 
         Column {
 
+            BookDetails(book = book, upPress = onBackScreen)
 
 
         }
@@ -139,12 +117,9 @@ private fun ContentDetailsReady(
 }
 
 
-
 @Composable
 private fun ScreenSlot(
     isConnected: Boolean,
-    onBackScreen: () -> Unit,
-    onBackOnline: () -> Unit,
     content: @Composable () -> Unit
 
 ) {
@@ -153,40 +128,7 @@ private fun ScreenSlot(
     ) {
 
 
-        TopAppBar(leftContent = {
-            AnimatedVisibility(
-                visible = true,
-                enter = slideInVertically { fullHeight -> fullHeight },
-                exit = slideOutVertically { fullHeight -> fullHeight },
-            ) {
-                IconButton(
-                    modifier = Modifier
-                        .padding(horizontal = 26.dp)
-                        .background(
-                            color = GoogleBooksTheme.colors.secondaryColor,
-                            shape = RoundedCornerShape(10.dp)
-                        ),
-                    onClick = onBackScreen
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.KeyboardArrowLeft,
-                        contentDescription = "back",
-                        tint = Color.White,
-                        modifier = Modifier.size(30.dp)
-                    )
 
-                }
-            }
-
-
-        }, centerContent = {
-
-
-
-        }, rightContent = {
-
-
-        })
         ConnectivityStatus(isConnected = isConnected, onBackOnline = { })
         Box(
             modifier = Modifier
@@ -209,14 +151,5 @@ private fun ContentLoadingState() {
         CircularProgressIndicator(
             color = GoogleBooksTheme.colors.contendAccentTertiary
         )
-    }
-}
-
-@Preview
-@Composable
-fun DetailBoxPreview() {
-    GoogleBooksTheme {
-
-
     }
 }

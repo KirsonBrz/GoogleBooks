@@ -15,6 +15,8 @@ data class State(
     val refreshInProgress: Boolean = false,
     val message: String? = null,
 
+    val showBar: Boolean = true,
+
 
     val books: List<BookDomainModel>? = null,
 

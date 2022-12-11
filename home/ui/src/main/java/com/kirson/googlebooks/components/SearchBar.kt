@@ -168,7 +168,7 @@ fun SearchTextField(
                     when {
 
 
-                        query.text.isNotEmpty() -> {
+                        query.text.isNotEmpty() && focused -> {
                             IconButton(onClick = onClearQuery) {
                                 Icon(
                                     imageVector = Icons.Filled.Close,

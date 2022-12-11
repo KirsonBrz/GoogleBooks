@@ -1,6 +1,7 @@
 package com.kirson.googlebooks
 
 import com.kirson.googlebooks.core.entity.mapDistinctNotNullChanges
+import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.entity.BooksListDomainModel
 import com.kirson.googlebooks.mappers.toDomainModel
 import kotlinx.coroutines.Dispatchers
@@ -17,13 +18,21 @@ class HomeModelImpl @Inject constructor(
     private val stateFlow = MutableStateFlow(State())
 
     data class State(
-        val books: BooksListDomainModel? = null
+        val books: BooksListDomainModel? = null,
+        val selectedBookTitle: String? = null,
     )
 
     override val books: Flow<BooksListDomainModel>
         get() = stateFlow.mapDistinctNotNullChanges {
             it.books
         }.flowOn(Dispatchers.IO)
+    override val selectedBook: Flow<BookDomainModel>
+        get() = stateFlow.mapDistinctNotNullChanges {
+            it.books?.books?.find { book ->
+                book.title == it.selectedBookTitle
+            }
+        }.flowOn(Dispatchers.IO)
+
 
     override suspend fun getBooks(searchQuery: String): BooksListDomainModel? {
         var books: BooksListDomainModel? = null
@@ -41,6 +50,16 @@ class HomeModelImpl @Inject constructor(
         }
 
         return books
+    }
+
+    override suspend fun selectBookForDetails(bookTitle: String) {
+
+        stateFlow.update { state ->
+            state.copy(
+                selectedBookTitle = bookTitle
+            )
+        }
+
     }
 
 

@@ -77,7 +77,17 @@ class ExplorerScreenViewModel @Inject constructor(
 
             }
 
+
         }
+    }
+
+    fun selectBookForDetails(bookTitle: String) {
+
+        viewModelScope.launch(IO) {
+            homeModel.selectBookForDetails(bookTitle)
+        }
+
+
     }
 
 
@@ -85,15 +95,6 @@ class ExplorerScreenViewModel @Inject constructor(
         _uiStateFlow.update {
             it.copy(
                 showCategorySelector = false
-            )
-        }
-    }
-
-
-    fun changeCategory() {
-        _uiStateFlow.update {
-            it.copy(
-                showCategorySelector = true
             )
         }
     }

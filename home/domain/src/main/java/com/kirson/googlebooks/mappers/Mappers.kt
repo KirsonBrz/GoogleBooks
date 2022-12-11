@@ -25,3 +25,4 @@ fun List<BookNetworkModel>.toDomainBooks(): List<BookDomainModel> =
             publishedDate = it.bookInfoNetworkModel.publishedDate,
         )
     }
+

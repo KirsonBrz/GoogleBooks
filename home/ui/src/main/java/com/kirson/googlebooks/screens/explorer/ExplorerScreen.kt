@@ -3,6 +3,8 @@ package com.kirson.googlebooks.screens.explorer
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,26 +16,47 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.kirson.googlebooks.components.ConnectivityStatus
 import com.kirson.googlebooks.components.EmptyContentMessage
 import com.kirson.googlebooks.components.MainModalBottomSheetScaffold
@@ -46,11 +69,12 @@ import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 import com.kirson.googlebooks.utils.ConnectionState
 import com.kirson.googlebooks.utils.SearchState
 import com.kirson.googlebooks.utils.connectivityState
+import com.kirson.googlebooks.utils.toHttpsPrefix
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
 fun ExplorerScreen(
-    viewModel: ExplorerScreenViewModel,
-    onPhoneDetails: () -> Unit
+    viewModel: ExplorerScreenViewModel, navigateToDetails: () -> Unit
 ) {
 
     val uiStateFlow by viewModel.uiStateFlow.collectAsState()
@@ -62,21 +86,26 @@ fun ExplorerScreen(
         viewModel.applySelectCategory(selectedCategory)
     }, dismissSelectCategory = {
         viewModel.dismissSelectCategory()
-    }, changeCategory = {
-        viewModel.changeCategory()
-    }, onBackOnline = {
-        //viewModel.getData()
     }, getBooksWithQuery = { query ->
         if (query.isNotBlank()) {
             viewModel.loadBooks(query)
         }
 
-    }
+    }, onBookDetails = { bookTitle ->
+        viewModel.selectBookForDetails(bookTitle)
+        navigateToDetails()
+
+    },
+        onSelectCategory = { selectedCategory ->
+            viewModel.loadBooks("+subject:$selectedCategory")
+
+        }
 
 
     )
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 private fun MainContent(
     uiState: ExplorerScreenUIState,
@@ -84,8 +113,8 @@ private fun MainContent(
     onRefresh: () -> Unit,
     applySelectCategory: (String) -> Unit,
     dismissSelectCategory: () -> Unit,
-    changeCategory: () -> Unit,
-    onBackOnline: () -> Unit,
+    onBookDetails: (String) -> Unit,
+    onSelectCategory: (String) -> Unit,
     getBooksWithQuery: (String) -> Unit,
 ) {
 
@@ -93,11 +122,9 @@ private fun MainContent(
     val isConnected = connection == ConnectionState.Available
 
 
-    var showBar by remember { mutableStateOf(false) }
+    val showBar by remember { mutableStateOf(true) }
 
     val scrollState = rememberLazyListState()
-
-    showBar = scrollState.firstVisibleItemIndex > 0
 
 
     when (uiState) {
@@ -120,17 +147,17 @@ private fun MainContent(
 
         is ExplorerScreenUIState.Loaded -> {
             ScreenSlot(
-                changeCategory = changeCategory,
                 isConnected = isConnected,
-                onBackOnline = onBackOnline,
                 showBar = showBar,
-                getBooksWithQuery = getBooksWithQuery
+                onSelectCategory = onSelectCategory,
+                getBooksWithQuery = getBooksWithQuery,
             ) {
                 if (uiState.state.books != null) {
                     ContentStateReady(
                         state = uiStateFlow,
                         books = uiState.state.books,
                         scrollState = scrollState,
+                        onBookDetails = onBookDetails,
                         onRefresh = { onRefresh() },
                         applySelectCategory = applySelectCategory,
                         dismissSelectCategory = dismissSelectCategory
@@ -143,14 +170,14 @@ private fun MainContent(
                     )
                 }
             }
+
         }
 
         is ExplorerScreenUIState.Loading -> {
             ScreenSlot(
-                changeCategory = changeCategory,
                 isConnected = isConnected,
-                onBackOnline = onBackOnline,
-                getBooksWithQuery = getBooksWithQuery
+                getBooksWithQuery = getBooksWithQuery,
+                onSelectCategory = onSelectCategory,
             ) {
                 ContentLoadingState()
             }
@@ -166,6 +193,7 @@ private fun ContentStateReady(
     scrollState: LazyListState,
     onRefresh: () -> Unit,
     books: List<BookDomainModel>,
+    onBookDetails: (String) -> Unit,
     applySelectCategory: (String) -> Unit,
     dismissSelectCategory: () -> Unit
 ) {
@@ -173,7 +201,10 @@ private fun ContentStateReady(
         state = state,
         content = {
             ContentMain(
-                state = state, onRefresh = onRefresh, books = books, scrollState = scrollState
+                onRefresh = onRefresh,
+                books = books,
+                onBookDetails = onBookDetails,
+                scrollState = scrollState
             )
         },
         applySelectCategory = applySelectCategory,
@@ -184,11 +215,11 @@ private fun ContentStateReady(
 
 @Composable
 private fun ContentMain(
-    state: State,
     scrollState: LazyListState,
     books: List<BookDomainModel>,
     modifier: Modifier = Modifier,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onBookDetails: (String) -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -206,10 +237,11 @@ private fun ContentMain(
                 ) {
 
                     items(books) {
-                        Text(text = it.title)
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Text(text = it.description.toString())
-                        Spacer(modifier = Modifier.height(15.dp))
+
+                        BookItem(
+                            book = it, onBookDetails = onBookDetails
+                        )
+
 
                     }
 
@@ -223,14 +255,75 @@ private fun ContentMain(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BookItem(
+    book: BookDomainModel, onBookDetails: (String) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(166.dp)
+            .padding(vertical = 3.dp),
+        onClick = {
+            onBookDetails(book.title)
+        },
+        colors = CardDefaults.cardColors(containerColor = GoogleBooksTheme.colors.contendPrimary),
+        elevation = CardDefaults.elevatedCardElevation(),
+        shape = CardDefaults.elevatedShape
+
+
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+
+            ) {
+
+            if (book.largeImage != null) {
+
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(book.largeImage!!.toHttpsPrefix()).crossfade(true).build(),
+                    contentDescription = "",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 100.dp, height = 150.dp)
+
+
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.Outlined.Star,
+                    contentDescription = null,
+                    tint = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(width = 100.dp, height = 150.dp)
+                        .background(color = Color.Transparent, shape = CircleShape)
+                )
+
+            }
+            Spacer(modifier = Modifier.width(15.dp))
+            Text(
+                text = book.title,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = GoogleBooksTheme.colors.contendAccentTertiary
+            )
+
+        }
+    }
+}
+
 
 @Composable
 private fun ScreenSlot(
-    changeCategory: () -> Unit,
+
     showBar: Boolean = true,
-    getBooksWithQuery: (String) -> Unit,
     isConnected: Boolean,
-    onBackOnline: () -> Unit,
+    onSelectCategory: (String) -> Unit,
+    getBooksWithQuery: (String) -> Unit,
     searchState: SearchState = rememberSearchState(),
     content: @Composable () -> Unit,
 
@@ -240,17 +333,82 @@ private fun ScreenSlot(
     ) {
 
 
-        ConnectivityStatus(isConnected = isConnected, onBackOnline = onBackOnline)
+        ConnectivityStatus(isConnected = isConnected, onBackOnline = { })
         ScrollableAppBar(
             scrollUpState = showBar,
             getBooksWithQuery = getBooksWithQuery,
-            searchState = searchState
+            searchState = searchState,
         )
+
+        val categoryList = listOf(
+            "Adventure",
+            "Children’s",
+            "Classic",
+            "Drama",
+            "Fairytale",
+            "Thriller",
+            "Fantasy",
+            "Mystery",
+            "Dictionary",
+            "Philosophy",
+            "Music",
+            "Science",
+            "Satire",
+            "Travel",
+            "Foreign Language Study",
+        )
+
+        val listState = rememberLazyGridState()
+
+        AnimatedVisibility(
+            visible = searchState.query.text.isBlank()
+
+        ) {
+
+            LazyVerticalGrid(
+                state = listState,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp),
+                columns = GridCells.Fixed(3),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+
+            ) {
+
+                items(items = categoryList) { categoryName ->
+                    TextButton(
+                        onClick = {
+                            searchState.query = TextFieldValue(categoryName)
+                            onSelectCategory(categoryName)
+                        },
+                        modifier = Modifier
+                            .size(120.dp)
+                            .background(
+                                color = GoogleBooksTheme.colors.contendPrimary,
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                    )
+                    {
+                        Text(
+                            text = categoryName,
+                            fontSize = 16.sp,
+                            color = GoogleBooksTheme.colors.contendAccentTertiary
+                        )
+
+                    }
+
+                }
+            }
+
+
+        }
+
+
+
 
         AnimatedVisibility(
             visible = searchState.query.text.isNotBlank(),
-            enter = expandVertically(),
-            exit = shrinkVertically()
+            enter = fadeIn(),
+            exit = fadeOut()
         ) {
             Box(
                 modifier = Modifier
@@ -275,12 +433,9 @@ fun ScrollableAppBar(
     searchState: SearchState,
     getBooksWithQuery: (String) -> Unit,
 ) {
-    var visibility by remember { mutableStateOf(true) }
 
     AnimatedVisibility(
-        visible = visibility,
-        enter = expandVertically(),
-        exit = shrinkVertically()
+        visible = scrollUpState, enter = expandVertically(), exit = shrinkVertically()
     ) {
         Surface(
             tonalElevation = 8.dp,
@@ -292,7 +447,9 @@ fun ScrollableAppBar(
                     .height(56.dp)
                     .background(color = background),
             )
-            Row() {
+            Row {
+
+
                 SearchBar(
                     query = searchState.query,
                     onQueryChange = { searchState.query = it },
@@ -306,15 +463,13 @@ fun ScrollableAppBar(
 
                 LaunchedEffect(searchState.query.text) {
                     searchState.searching = true
-                    getBooksWithQuery(searchState.query.text)
+                    if (searchState.focused) {
+                        getBooksWithQuery(searchState.query.text)
+                    }
                     searchState.searching = false
                 }
             }
         }
-    }
-
-    LaunchedEffect(scrollUpState) {
-        visibility = !scrollUpState
     }
 
 
