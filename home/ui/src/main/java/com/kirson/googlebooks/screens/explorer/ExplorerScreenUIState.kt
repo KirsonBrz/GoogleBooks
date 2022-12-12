@@ -18,7 +18,7 @@ data class State(
     val showBar: Boolean = true,
 
     val searchQuery: TextFieldValue = TextFieldValue(""),
-
+    val imageId: Int = 0,
     val selectedCategory: String? = null,
     val showCategorySelector: Boolean = false,
 )

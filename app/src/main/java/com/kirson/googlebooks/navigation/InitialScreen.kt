@@ -1,8 +1,8 @@
 package com.kirson.googlebooks.navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
@@ -14,7 +14,6 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,7 +24,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun InitialScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .background(color = GoogleBooksTheme.colors.primaryColor),
+        contentAlignment = Alignment.Center
     )
     {
 
@@ -34,27 +36,24 @@ fun InitialScreen(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
 
 
         Surface(
-            color = GoogleBooksTheme.colors.primaryColor,
+            color = GoogleBooksTheme.colors.contendPrimary,
             modifier = Modifier
-                .size(132.dp)
+                .size(280.dp)
                 .clip(CircleShape)
-                .align(Alignment.Center)
 
         ) {
 
 
         }
         Text(
-            text = "Ecommerce \nConcept",
-            fontSize = 30.sp,
+            text = "Google\nBooks",
+            fontSize = 52.sp,
             fontWeight = FontWeight.W800,
-            color = Color.White,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(start = 100.dp)
+            color = GoogleBooksTheme.colors.contendAccentTertiary,
+            textAlign = TextAlign.Center,
 
-        )
+
+            )
 
 
 

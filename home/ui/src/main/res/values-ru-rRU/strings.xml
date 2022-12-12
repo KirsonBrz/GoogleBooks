@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="adventure">Приключения</string>
+    <string name="biography">Биография</string>
+    <string name="business">Бизнес</string>
+    <string name="classic">Классика</string>
+    <string name="detective">Детектив</string>
+    <string name="drama">Драма</string>
+    <string name="fairytale">Сказки</string>
+    <string name="fantasy">Фантастика</string>
+    <string name="folklore">Фольклор</string>
+    <string name="historical">История</string>
+    <string name="horror">Ужасы</string>
+    <string name="humor">Юмор</string>
+    <string name="legend">Легенды</string>
+    <string name="mystery">Тайны</string>
+    <string name="mythology">Мифология</string>
+    <string name="nonfiction">Научная литература</string>
+    <string name="play">Игры</string>
+    <string name="poetry">Поэзия</string>
+    <string name="romance">Романы</string>
+    <string name="sciencefiction">ScienceFiction</string>
+</resources>

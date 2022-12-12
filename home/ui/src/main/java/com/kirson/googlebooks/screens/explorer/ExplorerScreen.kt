@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,32 +11,30 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -45,8 +42,10 @@ import androidx.paging.compose.items
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.kirson.googlebooks.components.BookItem
+import com.kirson.googlebooks.components.CategoryItem
 import com.kirson.googlebooks.components.ConnectivityStatus
 import com.kirson.googlebooks.components.EmptyContentMessage
+import com.kirson.googlebooks.components.ProgressIndicator
 import com.kirson.googlebooks.components.ScrollableAppBar
 import com.kirson.googlebooks.components.SuggestionScreen
 import com.kirson.googlebooks.components.SwipeRefresh
@@ -58,6 +57,7 @@ import com.kirson.googlebooks.entity.BookDomainModel
 import com.kirson.googlebooks.home.ui.R
 import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @Composable
 fun ExplorerScreen(
@@ -79,7 +79,7 @@ fun ExplorerScreen(
         },
         getBooksWithQuery = { query ->
             if (query.isNotBlank()) {
-                viewModel.setQuery(query)
+                viewModel.setQuery(query, 0)
             }
         },
         onBookDetails = { book ->
@@ -87,8 +87,8 @@ fun ExplorerScreen(
             navigateToDetails()
 
         },
-        onSelectCategory = { selectedCategory ->
-            viewModel.setQuery("+subject:$selectedCategory")
+        onSelectCategory = { selectedCategory, imageId ->
+            viewModel.setQuery("+subject:$selectedCategory", imageId)
 
         },
 
@@ -103,7 +103,7 @@ private fun ExplorerContent(
     uiState: ExplorerScreenUIState,
     onRefresh: () -> Unit,
     onBookDetails: (BookDomainModel) -> Unit,
-    onSelectCategory: (String) -> Unit,
+    onSelectCategory: (String, Int) -> Unit,
     getBooksWithQuery: (String) -> Unit,
 ) {
 
@@ -140,7 +140,10 @@ private fun ExplorerContent(
                 showBar = showBar,
                 onSelectCategory = onSelectCategory,
                 getBooksWithQuery = getBooksWithQuery,
-                searchState = rememberSearchState(query = uiState.state.searchQuery)
+                searchState = rememberSearchState(
+                    query = uiState.state.searchQuery,
+                    imageId = uiState.state.imageId
+                )
             ) {
 
                 ContentStateReady(
@@ -148,7 +151,6 @@ private fun ExplorerContent(
                     scrollState = scrollState,
                     onBookDetails = onBookDetails,
                     onRefresh = { onRefresh() },
-
                     )
 
             }
@@ -224,7 +226,7 @@ private fun ContentExplorer(
                         is LoadState.Error -> {
                             item {
                                 ErrorItem(
-                                    message = (booksData.loadState.append as LoadState.Error).error.message.toString()
+                                    scrollState = scrollState
                                 )
                             }
                         }
@@ -240,50 +242,52 @@ fun LoadingItem() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
-        contentAlignment = Alignment.Center
+            .wrapContentHeight(), contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(
+
+        ProgressIndicator(
             modifier = Modifier
-                .width(42.dp)
-                .height(42.dp)
-                .padding(8.dp),
-            strokeWidth = 5.dp
+                .fillMaxSize()
+                .padding(40.dp)
         )
 
     }
 }
 
 @Composable
-fun ErrorItem(message: String) {
+fun ErrorItem(scrollState: LazyListState) {
+
+    val coroutineScope = rememberCoroutineScope()
+
     Card(
         modifier = Modifier
             .padding(6.dp)
             .fillMaxWidth()
-            .wrapContentHeight()
+            .wrapContentHeight(),
+        colors = CardDefaults.cardColors(containerColor = GoogleBooksTheme.colors.contendPrimary)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red)
-                .padding(8.dp)
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.Center
         ) {
-            Icon(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .width(42.dp)
-                    .height(42.dp),
-                imageVector = Icons.Filled.Warning,
-                contentDescription = "",
-            )
-            Text(
-                color = Color.White,
-                text = message,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .padding(start = 12.dp)
-                    .align(CenterVertically)
-            )
+            IconButton(
+                onClick = {
+                    coroutineScope.launch {
+                        scrollState.animateScrollToItem(0)
+                    }
+                }) {
+                Icon(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(40.dp),
+                    imageVector = Icons.Filled.KeyboardArrowUp,
+                    contentDescription = "",
+                    tint = GoogleBooksTheme.colors.contendAccentTertiary
+                )
+            }
+
         }
     }
 }
@@ -295,7 +299,7 @@ private fun ScreenSlot(
 
     showBar: Boolean = true,
     isConnected: Boolean,
-    onSelectCategory: (String) -> Unit,
+    onSelectCategory: (String, Int) -> Unit,
     getBooksWithQuery: (String) -> Unit,
     searchState: SearchState = rememberSearchState(),
     content: @Composable () -> Unit,
@@ -315,23 +319,32 @@ private fun ScreenSlot(
         )
 
         val tabsList = listOf(
-            "Categories",
-            "Authors"
+            "Categories", "Authors"
         )
 
         val categoryList = listOf(
-            "Adventure",
-            "Classic",
-            "Drama",
-            "Fairytale",
-            "Thriller",
-            "Fantasy",
-            "Mystery",
-            "Dictionary",
-            "Music",
-            "Science",
-            "Travel",
-        )
+            CategoryItem.Adventure,
+            CategoryItem.Biography,
+            CategoryItem.Business,
+            CategoryItem.Classic,
+            CategoryItem.Detective,
+            CategoryItem.Drama,
+            CategoryItem.Fairytale,
+            CategoryItem.Fantasy,
+            CategoryItem.Folklore,
+            CategoryItem.Historical,
+            CategoryItem.Horror,
+            CategoryItem.Humor,
+            CategoryItem.Legend,
+            CategoryItem.Mystery,
+            CategoryItem.Mythology,
+            CategoryItem.NonFiction,
+            CategoryItem.Play,
+            CategoryItem.Poetry,
+            CategoryItem.Romance,
+            CategoryItem.ScienceFiction,
+
+            )
 
 
         val pagerState = rememberPagerState()

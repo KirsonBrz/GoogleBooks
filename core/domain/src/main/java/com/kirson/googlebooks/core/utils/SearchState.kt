@@ -10,11 +10,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Stable
 class SearchState(
     query: TextFieldValue,
+    imageId: Int,
     focused: Boolean,
     searching: Boolean,
 
     ) {
     var query by mutableStateOf(query)
+    var imageId by mutableStateOf(imageId)
     var focused by mutableStateOf(focused)
     var searching by mutableStateOf(searching)
 

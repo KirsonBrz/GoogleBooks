@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
@@ -53,8 +54,11 @@ class ExplorerScreenViewModel @Inject constructor(
         viewModelScope.launch(IO) {
 
             val searchQuery = homeModel.searchQuery
+            val imageId = homeModel.imageId
 
-            searchQuery.flowOn(IO).onStart {
+            val combineFlow = combine(searchQuery, imageId, ::Pair)
+
+            combineFlow.flowOn(IO).onStart {
                 withContext(Dispatchers.Main) {
                     _uiState.value = ExplorerScreenUIState.Loading(
                         State().copy(
@@ -76,10 +80,11 @@ class ExplorerScreenViewModel @Inject constructor(
                     )
                 )
 
-            }.flowOn(IO).collect { query ->
+            }.flowOn(IO).collect { combineData ->
                 _uiState.value = ExplorerScreenUIState.Loaded(
                     State().copy(
-                        searchQuery = TextFieldValue(query),
+                        searchQuery = TextFieldValue(combineData.first),
+                        imageId = combineData.second,
                         refreshInProgress = false
                     )
                 )
@@ -106,10 +111,10 @@ class ExplorerScreenViewModel @Inject constructor(
     }
 
 
-    fun setQuery(searchQuery: String) {
+    fun setQuery(searchQuery: String, imageId: Int) {
 
         viewModelScope.launch(IO) {
-            homeModel.setQuery(searchQuery)
+            homeModel.setQuery(searchQuery, imageId)
 
             _pageFlow.value = Pager(PagingConfig(pageSize = 10)) {
                 BooksDataSource(homeModel)

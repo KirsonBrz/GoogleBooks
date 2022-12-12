@@ -21,6 +21,7 @@ class HomeModelImpl @Inject constructor(
     data class State(
         val searchQuery: String = "",
         val selectedBook: BookDomainModel? = null,
+        val imageId: Int = 0
     )
 
 
@@ -31,6 +32,10 @@ class HomeModelImpl @Inject constructor(
     override val searchQuery: Flow<String>
         get() = stateFlow.mapDistinctNotNullChanges {
             it.searchQuery
+        }.flowOn(Dispatchers.IO)
+    override val imageId: Flow<Int>
+        get() = stateFlow.mapDistinctNotNullChanges {
+            it.imageId
         }.flowOn(Dispatchers.IO)
 
     override suspend fun loadBooksByIndex(index: Int): BooksListDomainModel? {
@@ -47,11 +52,12 @@ class HomeModelImpl @Inject constructor(
     }
 
 
-    override suspend fun setQuery(searchQuery: String) {
+    override suspend fun setQuery(searchQuery: String, imageId: Int) {
 
         stateFlow.update { state ->
             state.copy(
-                searchQuery = searchQuery.swapToCategoryPrefix()
+                searchQuery = searchQuery.swapToCategoryPrefix(),
+                imageId = imageId
             )
         }
 
