@@ -77,10 +77,7 @@ dependencies {
 
     // Test
     testImplementation Deps.testImplementationJunit
-    androidTestImplementation Deps.androidTestImplementationJunit
-    androidTestImplementation Deps.androidTestImplementationEspresso
-    androidTestImplementation Deps.androidTestImplementationComposeUi
-    debugImplementation Deps.debugImplementation
+
 }
 
 kapt {

@@ -10,8 +10,11 @@ class HomeRemoteDataSourceImpl @Inject constructor(
     private val booksAPIService: BooksAPIService
 ) : HomeRemoteDataSource {
 
-    override suspend fun getBooks(searchQuery: String): Response<BooksListNetworkModel> =
-        booksAPIService.getBooks(searchQuery)
+    override suspend fun getBooks(
+        searchQuery: String,
+        index: Int
+    ): Response<BooksListNetworkModel> =
+        booksAPIService.getBooks(searchQuery, index)
 
 
 }

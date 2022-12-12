@@ -15,11 +15,11 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
 
 
-    override suspend fun getBooks(searchQuery: String): BooksListNetworkModel? {
+    override suspend fun getBooks(searchQuery: String, index: Int): BooksListNetworkModel? {
         var books: BooksListNetworkModel? = null
 
         try {
-            val response = homeRemoteDataSource.getBooks(searchQuery)
+            val response = homeRemoteDataSource.getBooks(searchQuery, index)
             val data = response.body()
             if (data != null) {
                 books = data

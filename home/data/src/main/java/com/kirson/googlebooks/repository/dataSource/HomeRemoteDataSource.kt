@@ -5,7 +5,7 @@ import retrofit2.Response
 
 interface HomeRemoteDataSource {
 
-    suspend fun getBooks(searchQuery: String): Response<BooksListNetworkModel>
+    suspend fun getBooks(searchQuery: String, index: Int): Response<BooksListNetworkModel>
 
 
 }

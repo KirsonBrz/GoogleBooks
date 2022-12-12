@@ -34,7 +34,7 @@ import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookItem(
-    book: BookDomainModel, onBookDetails: (String) -> Unit
+    book: BookDomainModel, onBookDetails: (BookDomainModel) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -42,7 +42,7 @@ fun BookItem(
             .height(166.dp)
             .padding(vertical = 3.dp),
         onClick = {
-            onBookDetails(book.title)
+            onBookDetails(book)
         },
         colors = CardDefaults.cardColors(containerColor = GoogleBooksTheme.colors.contendPrimary),
         elevation = CardDefaults.elevatedCardElevation(),
