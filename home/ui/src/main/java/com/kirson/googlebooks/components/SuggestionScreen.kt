@@ -32,10 +32,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun SuggestionScreen(
     tabs: List<String>,
-    categories: List<String>,
+    categories: List<CategoryItem>,
     searchState: SearchState,
     pagerState: PagerState,
-    onSelectCategory: (String) -> Unit
+    onSelectCategory: (String, Int) -> Unit
 
 ) {
     val scope = rememberCoroutineScope()

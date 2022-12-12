@@ -2,18 +2,25 @@ package com.kirson.googlebooks.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
@@ -36,8 +43,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -66,7 +75,7 @@ fun ScrollableAppBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(60.dp)
                     .background(color = background),
             )
             Row {
@@ -76,10 +85,17 @@ fun ScrollableAppBar(
                     query = searchState.query,
                     onQueryChange = { searchState.query = it },
                     onSearchFocusChange = { searchState.focused = it },
-                    onClearQuery = { searchState.query = TextFieldValue("") },
-                    onBack = { searchState.query = TextFieldValue("") },
+                    onClearQuery = {
+                        searchState.query = TextFieldValue("")
+                        searchState.imageId = 0
+                    },
+                    onBack = {
+                        searchState.query = TextFieldValue("")
+                        searchState.imageId = 0
+                    },
                     searching = searchState.searching,
                     focused = searchState.focused,
+                    imageId = searchState.imageId
                 )
 
 
@@ -101,12 +117,13 @@ fun ScrollableAppBar(
 @Composable
 fun rememberSearchState(
     query: TextFieldValue = TextFieldValue(""),
+    imageId: Int = 0,
     focused: Boolean = false,
     searching: Boolean = false,
 ): SearchState {
     return remember {
         SearchState(
-            query = query, focused = focused, searching = searching
+            query = query, imageId = imageId, focused = focused, searching = searching
         )
     }
 }
@@ -123,6 +140,7 @@ fun SearchBar(
     onBack: () -> Unit,
     searching: Boolean,
     focused: Boolean,
+    imageId: Int,
     modifier: Modifier = Modifier
 ) {
 
@@ -130,7 +148,8 @@ fun SearchBar(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
-        modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         AnimatedVisibility(visible = (focused || query.text.isNotBlank())) {
@@ -146,6 +165,8 @@ fun SearchBar(
                     tint = GoogleBooksTheme.colors.contendAccentTertiary
                 )
             }
+
+
         }
 
         SearchTextField(
@@ -155,8 +176,27 @@ fun SearchBar(
             onClearQuery,
             searching,
             focused,
+            imageId,
             modifier.weight(1f)
         )
+
+        AnimatedVisibility(
+            visible = imageId != 0,
+            enter = expandHorizontally(),
+            exit = shrinkHorizontally()
+        ) {
+            // Category Icon
+            if (imageId != 0) {
+                Image(
+                    modifier = Modifier.padding(horizontal = 2.dp),
+                    painter = painterResource(id = imageId),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillHeight
+                )
+            }
+
+
+        }
     }
 }
 
@@ -168,6 +208,7 @@ fun SearchTextField(
     onClearQuery: () -> Unit,
     searching: Boolean,
     focused: Boolean,
+    imageId: Int,
     modifier: Modifier = Modifier
 ) {
 
@@ -178,10 +219,10 @@ fun SearchTextField(
             Modifier
                 .height(56.dp)
                 .padding(
-                    top = 8.dp,
-                    bottom = 8.dp,
+                    top = 5.dp,
+                    bottom = 5.dp,
                     start = if (!focused && query.text.isBlank()) 16.dp else 0.dp,
-                    end = 16.dp
+                    end = if (imageId == 0) 16.dp else 0.dp
                 )
         ),
         color = GoogleBooksTheme.colors.contendPrimary,
@@ -218,17 +259,31 @@ fun SearchTextField(
                                 onSearchFocusChange(it.isFocused)
                             }
                             .focusRequester(focusRequester)
-                            .padding(top = 9.dp, bottom = 8.dp, start = 24.dp, end = 8.dp),
+                            .padding(start = 24.dp, end = 8.dp),
                         singleLine = true,
                         textStyle = TextStyle(
                             fontSize = 18.sp,
                             fontWeight = FontWeight.W500,
                             color = GoogleBooksTheme.colors.contendAccentTertiary
                         ),
+                        decorationBox = { innerTextField ->
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(state = rememberScrollState())
+                            ) {
+                                Spacer(modifier = Modifier.height(10.dp))
+                                innerTextField()
+                                Spacer(modifier = Modifier.height(8.dp))
+                            }
+
+                        },
                         cursorBrush = SolidColor(Color.LightGray),
                     )
 
                     when {
+
+
                         searching -> {
 //                            CircularProgressIndicator(
 //                                modifier = Modifier
@@ -238,10 +293,11 @@ fun SearchTextField(
 //                            )
                             ProgressIndicator(
                                 modifier = Modifier
-                                    .padding(all = 10.dp)
+                                    .padding(10.dp)
                                     .weight(0.15f)
                             )
                         }
+
 
                         query.text.isNotEmpty() && focused -> {
                             IconButton(onClick = onClearQuery) {
@@ -271,7 +327,7 @@ private fun SearchHint(modifier: Modifier = Modifier) {
     ) {
         Text(
             color = Color(0xff757575),
-            text = "Search a Tag or Description",
+            text = "Search a Book or Category",
         )
     }
 }
