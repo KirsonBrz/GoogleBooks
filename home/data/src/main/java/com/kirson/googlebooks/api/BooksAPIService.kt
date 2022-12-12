@@ -13,6 +13,8 @@ interface BooksAPIService {
     suspend fun getBooks(
         @Query("q")
         searchQuery: String,
+        @Query("startIndex")
+        startIndex: Int,
         @Query("key")
         apiKey: String = BuildConfig.API_KEY
 

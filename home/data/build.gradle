@@ -59,4 +59,8 @@ dependencies {
     implementation Deps.implementationHiltNavigationCompose
 
 
+    // Test
+    testImplementation Deps.testImplementationJunit
+
+
 }

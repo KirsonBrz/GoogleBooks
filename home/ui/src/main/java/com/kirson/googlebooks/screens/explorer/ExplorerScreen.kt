@@ -4,24 +4,44 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.kirson.googlebooks.components.BookItem
@@ -46,32 +66,43 @@ fun ExplorerScreen(
 
 
     val uiState by viewModel.uiState
-
-    ExplorerContent(uiState = uiState, onRefresh = {
-        viewModel.observeData()
-    }, getBooksWithQuery = { query ->
-        if (query.isNotBlank()) {
-            viewModel.loadBooks(query)
-        }
-    }, onBookDetails = { bookTitle ->
-        viewModel.selectBookForDetails(bookTitle)
-        navigateToDetails()
-
-    }, onSelectCategory = { selectedCategory ->
-        viewModel.loadBooks("+subject:$selectedCategory")
-
-    }
+    val pageFlow by viewModel.pageFlow
 
 
-    )
+
+
+    ExplorerContent(
+        booksData = pageFlow.collectAsLazyPagingItems(),
+        uiState = uiState,
+        onRefresh = {
+            viewModel.observeData()
+        },
+        getBooksWithQuery = { query ->
+            if (query.isNotBlank()) {
+                viewModel.setQuery(query)
+            }
+        },
+        onBookDetails = { book ->
+            viewModel.selectBookForDetails(book)
+            navigateToDetails()
+
+        },
+        onSelectCategory = { selectedCategory ->
+            viewModel.setQuery("+subject:$selectedCategory")
+
+        },
+
+
+        )
 }
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 private fun ExplorerContent(
+    booksData: LazyPagingItems<BookDomainModel>,
     uiState: ExplorerScreenUIState,
     onRefresh: () -> Unit,
-    onBookDetails: (String) -> Unit,
+    onBookDetails: (BookDomainModel) -> Unit,
     onSelectCategory: (String) -> Unit,
     getBooksWithQuery: (String) -> Unit,
 ) {
@@ -111,21 +142,15 @@ private fun ExplorerContent(
                 getBooksWithQuery = getBooksWithQuery,
                 searchState = rememberSearchState(query = uiState.state.searchQuery)
             ) {
-                if (uiState.state.books != null) {
-                    ContentStateReady(
-                        books = uiState.state.books,
-                        scrollState = scrollState,
-                        onBookDetails = onBookDetails,
-                        onRefresh = { onRefresh() },
 
-                        )
-                } else {
-                    EmptyContentMessage(
-                        imgRes = R.drawable.img_status_disclaimer_170,
-                        title = "Searching",
-                        description = "No Results",
+                ContentStateReady(
+                    booksData = booksData,
+                    scrollState = scrollState,
+                    onBookDetails = onBookDetails,
+                    onRefresh = { onRefresh() },
+
                     )
-                }
+
             }
 
         }
@@ -148,14 +173,14 @@ private fun ExplorerContent(
 private fun ContentStateReady(
 
     scrollState: LazyListState,
-    books: List<BookDomainModel>,
     onRefresh: () -> Unit,
-    onBookDetails: (String) -> Unit,
+    booksData: LazyPagingItems<BookDomainModel>,
+    onBookDetails: (BookDomainModel) -> Unit,
 
     ) {
     ContentExplorer(
         onRefresh = onRefresh,
-        books = books,
+        booksData = booksData,
         onBookDetails = onBookDetails,
         scrollState = scrollState
     )
@@ -166,10 +191,10 @@ private fun ContentStateReady(
 @Composable
 private fun ContentExplorer(
     scrollState: LazyListState,
-    books: List<BookDomainModel>,
+    booksData: LazyPagingItems<BookDomainModel>,
     modifier: Modifier = Modifier,
     onRefresh: () -> Unit,
-    onBookDetails: (String) -> Unit,
+    onBookDetails: (BookDomainModel) -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -185,14 +210,80 @@ private fun ContentExplorer(
                     state = scrollState
                 ) {
 
-                    items(books) {
-                        BookItem(
-                            book = it, onBookDetails = onBookDetails
-                        )
+                    items(booksData) { book ->
+                        book?.let {
+                            BookItem(book = book, onBookDetails = onBookDetails)
+                        }
+                    }
+                    when (booksData.loadState.append) {
+                        is LoadState.NotLoading -> Unit
+                        LoadState.Loading -> {
+                            item { LoadingItem() }
+                        }
 
+                        is LoadState.Error -> {
+                            item {
+                                ErrorItem(
+                                    message = (booksData.loadState.append as LoadState.Error).error.message.toString()
+                                )
+                            }
+                        }
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun LoadingItem() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .width(42.dp)
+                .height(42.dp)
+                .padding(8.dp),
+            strokeWidth = 5.dp
+        )
+
+    }
+}
+
+@Composable
+fun ErrorItem(message: String) {
+    Card(
+        modifier = Modifier
+            .padding(6.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Red)
+                .padding(8.dp)
+        ) {
+            Icon(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .width(42.dp)
+                    .height(42.dp),
+                imageVector = Icons.Filled.Warning,
+                contentDescription = "",
+            )
+            Text(
+                color = Color.White,
+                text = message,
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .align(CenterVertically)
+            )
         }
     }
 }

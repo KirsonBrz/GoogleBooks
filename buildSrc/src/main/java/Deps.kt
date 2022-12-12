@@ -69,6 +69,7 @@ object Deps {
     const val composeRuntimeLiveData = "androidx.compose.runtime:runtime-livedata:$composeVersion"
     const val composeActivity = "androidx.activity:activity-compose:1.6.1"
     const val composeNavigation = "androidx.navigation:navigation-compose:2.5.3"
+    const val composePaging = "androidx.paging:paging-compose:1.0.0-alpha17"
 
     //Lifecycle + Compose ViewModel
     private const val lifecycle_version = "2.5.1"

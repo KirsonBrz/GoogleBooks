@@ -4,7 +4,7 @@ import com.kirson.googlebooks.entity.BooksListNetworkModel
 
 
 interface HomeRepository {
-    suspend fun getBooks(searchQuery: String): BooksListNetworkModel?
+    suspend fun getBooks(searchQuery: String, index: Int): BooksListNetworkModel?
 
 
 }

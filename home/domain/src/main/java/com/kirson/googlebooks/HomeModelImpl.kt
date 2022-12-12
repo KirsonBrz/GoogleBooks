@@ -19,51 +19,51 @@ class HomeModelImpl @Inject constructor(
     private val stateFlow = MutableStateFlow(State())
 
     data class State(
-        val books: BooksListDomainModel? = null,
-        val searchQuery: String? = null,
-        val selectedBookTitle: String? = null,
+        val searchQuery: String = "",
+        val selectedBook: BookDomainModel? = null,
     )
 
-    override val books: Flow<BooksListDomainModel>
-        get() = stateFlow.mapDistinctNotNullChanges {
-            it.books
-        }.flowOn(Dispatchers.IO)
+
     override val selectedBook: Flow<BookDomainModel>
         get() = stateFlow.mapDistinctNotNullChanges {
-            it.books?.books?.find { book ->
-                book.title == it.selectedBookTitle
-            }
+            it.selectedBook
         }.flowOn(Dispatchers.IO)
     override val searchQuery: Flow<String>
         get() = stateFlow.mapDistinctNotNullChanges {
             it.searchQuery
         }.flowOn(Dispatchers.IO)
 
+    override suspend fun loadBooksByIndex(index: Int): BooksListDomainModel? {
 
-    override suspend fun getBooks(searchQuery: String): BooksListDomainModel? {
         var books: BooksListDomainModel? = null
 
-        val data = repository.getBooks(searchQuery)
+        val data = repository.getBooks(stateFlow.value.searchQuery.swapToCategoryPrefix(), index)
 
         if (data != null) {
             books = data.toDomainModel()
         }
 
+        return books
+    }
+
+
+    override suspend fun setQuery(searchQuery: String) {
+
         stateFlow.update { state ->
             state.copy(
-                books = books,
                 searchQuery = searchQuery.swapToCategoryPrefix()
             )
         }
 
-        return books
+
     }
 
-    override suspend fun selectBookForDetails(bookTitle: String) {
+
+    override suspend fun selectBookForDetails(book: BookDomainModel) {
 
         stateFlow.update { state ->
             state.copy(
-                selectedBookTitle = bookTitle
+                selectedBook = book
             )
         }
 

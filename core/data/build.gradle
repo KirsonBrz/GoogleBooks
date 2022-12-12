@@ -41,4 +41,7 @@ dependencies {
     implementation project(":core:domain")
 
 
+    // Test
+    testImplementation Deps.testImplementationJunit
+
 }

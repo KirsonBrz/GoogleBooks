@@ -50,5 +50,10 @@ dependencies {
     kapt Deps.kaptDaggerHiltAndroid
     implementation Deps.implementationHiltNavigationCompose
 
+    //Paging
+    implementation Deps.composePaging
+
+    // Test
+    testImplementation Deps.testImplementationJunit
 
 }

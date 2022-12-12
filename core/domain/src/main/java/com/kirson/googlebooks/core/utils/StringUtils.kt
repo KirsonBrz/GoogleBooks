@@ -11,4 +11,7 @@ fun String.toHttpsPrefix(): String =
 fun String.swapToCategoryPrefix(): String =
     if (startsWith("+subject:")) {
         replace("+subject:", "Category: ")
+    } else if (startsWith("Category: ")) {
+        replace("Category: ", "+subject:")
     } else this
+

@@ -29,6 +29,8 @@ fun DetailsScreen(
 
     val uiState by viewModel.uiState
 
+
+
     DetailsContent(
         uiState = uiState,
         onBackScreen = { onBackScreen() },

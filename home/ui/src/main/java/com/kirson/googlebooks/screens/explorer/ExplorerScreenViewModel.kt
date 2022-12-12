@@ -4,13 +4,20 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.kirson.googlebooks.HomeModel
 import com.kirson.googlebooks.core.base.BaseViewModel
+import com.kirson.googlebooks.entity.BookDomainModel
+import com.kirson.googlebooks.entity.BooksDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -29,8 +36,14 @@ class ExplorerScreenViewModel @Inject constructor(
         get() = _uiState
 
 
+    private var _pageFlow = mutableStateOf<Flow<PagingData<BookDomainModel>>>(flowOf())
+    val pageFlow: State<Flow<PagingData<BookDomainModel>>>
+        get() = _pageFlow
+
+
     init {
         viewModelScope.launch(IO) {
+
             observeData()
         }
     }
@@ -39,12 +52,9 @@ class ExplorerScreenViewModel @Inject constructor(
     fun observeData() {
         viewModelScope.launch(IO) {
 
-            val books = homeModel.books
             val searchQuery = homeModel.searchQuery
 
-            val combineFlow = combine(books, searchQuery, ::Pair)
-
-            combineFlow.flowOn(IO).onStart {
+            searchQuery.flowOn(IO).onStart {
                 withContext(Dispatchers.Main) {
                     _uiState.value = ExplorerScreenUIState.Loading(
                         State().copy(
@@ -66,35 +76,44 @@ class ExplorerScreenViewModel @Inject constructor(
                     )
                 )
 
-            }.flowOn(IO).collect { combineData ->
+            }.flowOn(IO).collect { query ->
                 _uiState.value = ExplorerScreenUIState.Loaded(
                     State().copy(
-                        books = combineData.first.books,
-                        searchQuery = TextFieldValue(combineData.second),
+                        searchQuery = TextFieldValue(query),
                         refreshInProgress = false
                     )
                 )
 
             }
 
+            withContext(IO) {
+                _pageFlow.value = Pager(PagingConfig(pageSize = 10)) {
+                    BooksDataSource(homeModel)
+                }.flow.cachedIn(viewModelScope)
+            }
+
 
         }
     }
 
-    fun selectBookForDetails(bookTitle: String) {
+    fun selectBookForDetails(book: BookDomainModel) {
 
         viewModelScope.launch(IO) {
-            homeModel.selectBookForDetails(bookTitle)
+            homeModel.selectBookForDetails(book)
         }
 
 
     }
 
 
-    fun loadBooks(searchQuery: String) {
+    fun setQuery(searchQuery: String) {
 
         viewModelScope.launch(IO) {
-            homeModel.getBooks(searchQuery)
+            homeModel.setQuery(searchQuery)
+
+            _pageFlow.value = Pager(PagingConfig(pageSize = 10)) {
+                BooksDataSource(homeModel)
+            }.flow.cachedIn(viewModelScope)
         }
 
 

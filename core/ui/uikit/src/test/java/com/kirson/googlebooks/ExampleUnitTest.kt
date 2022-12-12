@@ -1,4 +1,4 @@
-package com.kirson.designsystem
+package com.kirson.googlebooks
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
