@@ -9,14 +9,11 @@ import com.kirson.googlebooks.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -31,12 +28,9 @@ class ExplorerScreenViewModel @Inject constructor(
     val uiState: State<ExplorerScreenUIState>
         get() = _uiState
 
-    private val _uiStateFlow = MutableStateFlow(State())
-    val uiStateFlow = _uiStateFlow.asStateFlow()
 
     init {
         viewModelScope.launch(IO) {
-
             observeData()
         }
     }
@@ -96,28 +90,6 @@ class ExplorerScreenViewModel @Inject constructor(
 
     }
 
-
-    fun dismissSelectCategory() {
-        _uiStateFlow.update {
-            it.copy(
-                showCategorySelector = false
-            )
-        }
-    }
-
-
-    fun applySelectCategory(category: String) {
-        viewModelScope.launch {
-            _uiStateFlow.update { state ->
-                state.copy(
-                    showCategorySelector = false
-                )
-            }
-
-        }
-        //mainModel.applyCategory(category)
-
-    }
 
     fun loadBooks(searchQuery: String) {
 

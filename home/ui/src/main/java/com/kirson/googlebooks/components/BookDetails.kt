@@ -117,56 +117,72 @@ private fun Body(
             color = GoogleBooksTheme.colors.backgroundPrimary
         ) {
             Column {
-                Text(
-                    text = "Authors",
-                    style = MaterialTheme.typography.overline,
-                    color = GoogleBooksTheme.colors.contendAccentTertiary,
-                    modifier = HzPadding
-                )
-                Spacer(Modifier.height(4.dp))
-                Text(
-                    text = book.authors?.get(0) ?: "No authors",
-                    style = MaterialTheme.typography.body1,
-                    color = GoogleBooksTheme.colors.contendAccentTertiary,
-                    modifier = HzPadding
-                )
-
-                Spacer(Modifier.height(16.dp))
-                HorizontalDivider()
-
                 Spacer(Modifier.height(16.dp))
                 Text(
                     text = book.title,
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 24.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = HzPadding
+                )
+                Spacer(Modifier.height(16.dp))
+                HorizontalDivider()
+                Spacer(Modifier.height(16.dp))
+
+                Text(
+                    text = "Author",
+                    style = MaterialTheme.typography.overline,
+                    fontSize = 14.sp,
                     color = GoogleBooksTheme.colors.contendAccentTertiary,
                     modifier = HzPadding
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "Published at: ${book.publishedDate}",
-                    style = MaterialTheme.typography.h6,
-                    color = GoogleBooksTheme.colors.contendAccentTertiary,
-                    modifier = HzPadding
-                )
-
-                Spacer(Modifier.height(8.dp))
-                HorizontalDivider()
-
-                Text(
-                    text = "Description",
-                    style = MaterialTheme.typography.overline,
-                    color = GoogleBooksTheme.colors.contendAccentTertiary,
-                    modifier = HzPadding
-                )
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    text = if (book.description != null) book.description.toString() else "no description",
-                    style = MaterialTheme.typography.subtitle2,
+                    text = book.authors?.get(0) ?: "No author",
+                    style = MaterialTheme.typography.body1,
                     fontSize = 20.sp,
                     color = GoogleBooksTheme.colors.contendAccentTertiary,
                     modifier = HzPadding
                 )
 
+
+                Spacer(Modifier.height(8.dp))
+
+                Text(
+                    text = "Published at",
+                    style = MaterialTheme.typography.overline,
+                    fontSize = 14.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = HzPadding
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = book.publishedDate ?: "No date",
+                    style = MaterialTheme.typography.body2,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = HzPadding
+                )
+
+                Spacer(Modifier.height(16.dp))
+                HorizontalDivider()
+                Spacer(Modifier.height(16.dp))
+
+                Text(
+                    text = "Description",
+                    style = MaterialTheme.typography.overline,
+                    fontSize = 14.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = HzPadding
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = book.description ?: "No description",
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 20.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                    modifier = HzPadding
+                )
+                Spacer(Modifier.height(60.dp))
 
             }
         }

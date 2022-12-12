@@ -76,9 +76,10 @@ dependencies {
 
 
     // accompanist
+    implementation Deps.accompanistPager
+    implementation Deps.accompanistPagerIndicators
     implementation Deps.accompanistSwipeRefresh
     implementation Deps.accompanistPermissions
-
 
 
     // Timber

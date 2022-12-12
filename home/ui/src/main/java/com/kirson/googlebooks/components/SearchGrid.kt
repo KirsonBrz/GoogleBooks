@@ -2,17 +2,28 @@ package com.kirson.googlebooks.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -23,7 +34,6 @@ import com.kirson.googlebooks.ui.theme.GoogleBooksTheme
 
 @Composable
 fun SearchGrid(
-    listState: LazyGridState,
     categoryList: List<String>,
     searchState: SearchState,
     onSelectCategory: (String) -> Unit
@@ -31,35 +41,51 @@ fun SearchGrid(
 ) {
 
     LazyVerticalGrid(
-        state = listState,
-        modifier = Modifier.padding(horizontal = 8.dp, vertical = 5.dp),
-        columns = GridCells.Fixed(3),
+        state = rememberLazyGridState(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 15.dp),
+        columns = GridCells.Fixed(4),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp)
 
     ) {
 
         items(items = categoryList) { categoryName ->
-            TextButton(
+            Button(
                 onClick = {
                     searchState.focused = false
                     searchState.query = TextFieldValue("Category: $categoryName")
                     onSelectCategory(categoryName)
-                }, modifier = Modifier
-                    .size(120.dp)
-                    .background(
-                        color = GoogleBooksTheme.colors.contendPrimary,
-                        shape = RoundedCornerShape(12.dp)
-                    )
+                },
+                contentPadding = PaddingValues(3.dp),
+                shape = RoundedCornerShape(6.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             ) {
-                Text(
-                    text = categoryName,
-                    fontSize = 18.sp,
-                    color = GoogleBooksTheme.colors.contendAccentTertiary,
-                    fontWeight = FontWeight.W600,
-                    textAlign = TextAlign.Center
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
+                    Icon(
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = null,
+                        tint = GoogleBooksTheme.colors.contendAccentTertiary,
+                        modifier = Modifier
+                            .background(
+                                GoogleBooksTheme.colors.contendPrimary,
+                                shape = CircleShape
+                            )
+                            .padding(16.dp),
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = categoryName,
+                        fontSize = 15.sp,
+                        maxLines = 2,
+                        color = GoogleBooksTheme.colors.contendAccentTertiary,
+                        fontWeight = FontWeight.W600,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
 
         }

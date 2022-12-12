@@ -33,7 +33,6 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
-
 private const val NumDots = 5
 private const val AnimationDuration = 650
 private const val AnimationSegment = AnimationDuration / 10

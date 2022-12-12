@@ -1,6 +1,7 @@
 package com.kirson.googlebooks.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Card
@@ -21,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -80,12 +81,38 @@ fun BookItem(
 
             }
             Spacer(modifier = Modifier.width(15.dp))
-            Text(
-                text = book.title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = GoogleBooksTheme.colors.contendAccentTertiary
-            )
+
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 15.dp)) {
+                Text(
+                    text = book.title,
+                    fontSize = 20.sp,
+                    style = MaterialTheme.typography.h3,
+                    maxLines = 3,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = book.authors?.get(0) ?: "",
+                    style = MaterialTheme.typography.body1,
+                    fontSize = 14.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = book.publishedDate ?: "",
+                    style = MaterialTheme.typography.body2,
+                    fontSize = 10.sp,
+                    color = GoogleBooksTheme.colors.contendAccentTertiary,
+                )
+
+
+            }
+
 
         }
     }

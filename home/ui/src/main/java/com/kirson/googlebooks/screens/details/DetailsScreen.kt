@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,16 +23,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
 fun DetailsScreen(
-    viewModel: DetailsScreenViewModel,
-    onBackScreen: () -> Unit
+    viewModel: DetailsScreenViewModel, onBackScreen: () -> Unit
 ) {
 
-    val uiStateFlow by viewModel.uiStateFlow.collectAsState()
+
     val uiState by viewModel.uiState
 
     DetailsContent(
         uiState = uiState,
-        uiStateFlow = uiStateFlow,
         onBackScreen = { onBackScreen() },
     )
 
@@ -44,7 +41,6 @@ fun DetailsScreen(
 @Composable
 private fun DetailsContent(
     uiState: DetailsScreenUIState,
-    uiStateFlow: State,
     onBackScreen: () -> Unit,
 ) {
     val connection by connectivityState()
@@ -73,8 +69,7 @@ private fun DetailsContent(
             ) {
                 if (uiState.state.book != null) {
                     ContentDetailsReady(
-                        book = uiState.state.book,
-                        onBackScreen = onBackScreen
+                        book = uiState.state.book, onBackScreen = onBackScreen
                     )
                 } else {
                     EmptyContentMessage(
@@ -121,8 +116,7 @@ private fun ContentDetailsReady(
 
 @Composable
 private fun ScreenSlot(
-    isConnected: Boolean,
-    content: @Composable () -> Unit
+    isConnected: Boolean, content: @Composable () -> Unit
 
 ) {
     Column(

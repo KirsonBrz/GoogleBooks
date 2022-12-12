@@ -7,8 +7,6 @@ import com.kirson.googlebooks.HomeModel
 import com.kirson.googlebooks.core.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
@@ -26,15 +24,12 @@ class DetailsScreenViewModel @Inject constructor(
     val uiState: State<DetailsScreenUIState>
         get() = _uiState
 
-    private val _uiStateFlow = MutableStateFlow(State())
-    val uiStateFlow = _uiStateFlow.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             observeData()
         }
     }
-
 
 
     private fun observeData() = viewModelScope.launch(Dispatchers.IO) {
@@ -68,8 +63,7 @@ class DetailsScreenViewModel @Inject constructor(
         }.flowOn(Dispatchers.IO).collect { selectedBook ->
             _uiState.value = DetailsScreenUIState.Loaded(
                 State().copy(
-                    book = selectedBook,
-                    refreshInProgress = false
+                    book = selectedBook, refreshInProgress = false
                 )
             )
 

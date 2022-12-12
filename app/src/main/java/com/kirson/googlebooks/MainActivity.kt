@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kirson.googlebooks.navigation.InitialScreen
 import com.kirson.googlebooks.navigation.Navigator
@@ -54,7 +53,7 @@ fun MainScreenContent() {
     val navController = rememberNavController()
     val navigator = Navigator()
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
 
 
     Scaffold(

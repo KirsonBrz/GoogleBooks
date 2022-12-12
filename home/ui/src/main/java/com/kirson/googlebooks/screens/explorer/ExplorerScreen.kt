@@ -12,24 +12,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 import com.kirson.googlebooks.components.BookItem
 import com.kirson.googlebooks.components.ConnectivityStatus
 import com.kirson.googlebooks.components.EmptyContentMessage
-import com.kirson.googlebooks.components.ExplorerBottomSheetScaffold
 import com.kirson.googlebooks.components.ScrollableAppBar
-import com.kirson.googlebooks.components.SearchGrid
+import com.kirson.googlebooks.components.SuggestionScreen
 import com.kirson.googlebooks.components.SwipeRefresh
 import com.kirson.googlebooks.components.rememberSearchState
 import com.kirson.googlebooks.core.utils.ConnectionState
@@ -45,20 +44,15 @@ fun ExplorerScreen(
     viewModel: ExplorerScreenViewModel, navigateToDetails: () -> Unit
 ) {
 
-    val uiStateFlow by viewModel.uiStateFlow.collectAsState()
+
     val uiState by viewModel.uiState
 
-    ExplorerContent(uiState = uiState, uiStateFlow = uiStateFlow, onRefresh = {
+    ExplorerContent(uiState = uiState, onRefresh = {
         viewModel.observeData()
-    }, applySelectCategory = { selectedCategory ->
-        viewModel.applySelectCategory(selectedCategory)
-    }, dismissSelectCategory = {
-        viewModel.dismissSelectCategory()
     }, getBooksWithQuery = { query ->
         if (query.isNotBlank()) {
             viewModel.loadBooks(query)
         }
-
     }, onBookDetails = { bookTitle ->
         viewModel.selectBookForDetails(bookTitle)
         navigateToDetails()
@@ -76,10 +70,7 @@ fun ExplorerScreen(
 @Composable
 private fun ExplorerContent(
     uiState: ExplorerScreenUIState,
-    uiStateFlow: State,
     onRefresh: () -> Unit,
-    applySelectCategory: (String) -> Unit,
-    dismissSelectCategory: () -> Unit,
     onBookDetails: (String) -> Unit,
     onSelectCategory: (String) -> Unit,
     getBooksWithQuery: (String) -> Unit,
@@ -122,14 +113,12 @@ private fun ExplorerContent(
             ) {
                 if (uiState.state.books != null) {
                     ContentStateReady(
-                        state = uiStateFlow,
                         books = uiState.state.books,
                         scrollState = scrollState,
                         onBookDetails = onBookDetails,
                         onRefresh = { onRefresh() },
-                        applySelectCategory = applySelectCategory,
-                        dismissSelectCategory = dismissSelectCategory
-                    )
+
+                        )
                 } else {
                     EmptyContentMessage(
                         imgRes = R.drawable.img_status_disclaimer_170,
@@ -157,26 +146,19 @@ private fun ExplorerContent(
 
 @Composable
 private fun ContentStateReady(
-    state: State,
+
     scrollState: LazyListState,
     books: List<BookDomainModel>,
     onRefresh: () -> Unit,
     onBookDetails: (String) -> Unit,
-    applySelectCategory: (String) -> Unit,
-    dismissSelectCategory: () -> Unit
-) {
-    ExplorerBottomSheetScaffold(
-        state = state,
-        applySelectCategory = applySelectCategory,
-        dismissSelectCategory = dismissSelectCategory,
+
     ) {
-        ContentExplorer(
-            onRefresh = onRefresh,
-            books = books,
-            onBookDetails = onBookDetails,
-            scrollState = scrollState
-        )
-    }
+    ContentExplorer(
+        onRefresh = onRefresh,
+        books = books,
+        onBookDetails = onBookDetails,
+        scrollState = scrollState
+    )
 
 }
 
@@ -216,6 +198,7 @@ private fun ContentExplorer(
 }
 
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 private fun ScreenSlot(
 
@@ -240,9 +223,13 @@ private fun ScreenSlot(
             searchState = searchState,
         )
 
+        val tabsList = listOf(
+            "Categories",
+            "Authors"
+        )
+
         val categoryList = listOf(
             "Adventure",
-            "Children’s",
             "Classic",
             "Drama",
             "Fairytale",
@@ -250,21 +237,24 @@ private fun ScreenSlot(
             "Fantasy",
             "Mystery",
             "Dictionary",
-            "Philosophy",
             "Music",
             "Science",
-            "Satire",
             "Travel",
-            "Foreign Language Study",
         )
-        val listState = rememberLazyGridState()
+
+
+        val pagerState = rememberPagerState()
 
         AnimatedVisibility(
             visible = searchState.query.text.isBlank()
 
         ) {
-            SearchGrid(
-                listState, categoryList, searchState, onSelectCategory
+            SuggestionScreen(
+                tabs = tabsList,
+                categories = categoryList,
+                searchState = searchState,
+                pagerState = pagerState,
+                onSelectCategory = onSelectCategory
             )
 
         }
