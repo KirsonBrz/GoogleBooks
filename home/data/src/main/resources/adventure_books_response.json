@@ -1,0 +1,723 @@
+{
+  "kind": "books#volumes",
+  "totalItems": 200,
+  "items": [
+    {
+      "kind": "books#volume",
+      "id": "T3YEHwVN7a4C",
+      "etag": "B9Pc6RpVcw4",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/T3YEHwVN7a4C",
+      "volumeInfo": {
+        "title": "The Books of the South: Tales of the Black Company",
+        "authors": [
+          "Glen Cook"
+        ],
+        "publisher": "Macmillan",
+        "publishedDate": "2008-06-10",
+        "description": "In a second omnibus of tales featuring the Black Company, the survivors of the devastating battle at the Tower of Charm are hounded by the predatory Shadowmasters throughout a risky march to the south. Original.15,000 first printing.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0765320665"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780765320667"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 676,
+        "printType": "BOOK",
+        "categories": [
+          "Fiction"
+        ],
+        "averageRating": 3.5,
+        "ratingsCount": 15,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.3.2.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=T3YEHwVN7a4C&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=T3YEHwVN7a4C&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=T3YEHwVN7a4C&dq=%2Bsubject:Adventure&hl=&cd=1&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=T3YEHwVN7a4C&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Books_of_the_South_Tales_of_the_Blac.html?hl=&id=T3YEHwVN7a4C"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": true
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=T3YEHwVN7a4C&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "In a second omnibus of tales featuring the Black Company, the survivors of the devastating battle at the Tower of Charm are hounded by the predatory Shadowmasters throughout a risky march to the south. Original.15,000 first printing."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "sYAXMQAACAAJ",
+      "etag": "SfMS8vGKFdw",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/sYAXMQAACAAJ",
+      "volumeInfo": {
+        "title": "Epic Zero Series",
+        "subtitle": "Epic Zero Collection:",
+        "authors": [
+          "R. L. Ullman"
+        ],
+        "publishedDate": "2016-12-01",
+        "description": "Extraordinary family. Ordinary kid. Elliott Harkness is the youngest in a family of superheroes, but he has no powers of his own - or so he thinks. Follow Elliott's hilarious journey to fit in with his family, save the world, and make it home for dinner.Get all three novels in the award-winning superhero adventure series in one epic volume for 15% off! Perfect for fans of Diary of a Wimpy Kid and The Incredibles! The Epic Zero Collection includes 48 illustrated character profiles and a full glossary of superpowers.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0998412902"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780998412900"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "printType": "BOOK",
+        "averageRating": 5,
+        "ratingsCount": 1,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=sYAXMQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=sYAXMQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=sYAXMQAACAAJ&dq=%2Bsubject:Adventure&hl=&cd=2&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=sYAXMQAACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Epic_Zero_Series.html?hl=&id=sYAXMQAACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=sYAXMQAACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Perfect for fans of Diary of a Wimpy Kid and The Incredibles! The Epic Zero Collection includes 48 illustrated character profiles and a full glossary of superpowers."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "gaeHmgEACAAJ",
+      "etag": "XN3oBByb75g",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/gaeHmgEACAAJ",
+      "volumeInfo": {
+        "title": "The Dark is Rising",
+        "authors": [
+          "Susan Cooper"
+        ],
+        "publisher": "Puffin Bks",
+        "publishedDate": "1976",
+        "description": "On his eleventh birthday Will Stanton discovers that he is the last of the Old Ones, destined to seek the six magical Signs that will enable the Old Ones to triumph over the evil forces of the Dark.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0140307990"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780140307993"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 267,
+        "printType": "BOOK",
+        "categories": [
+          "Adventure"
+        ],
+        "averageRating": 5,
+        "ratingsCount": 1,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=gaeHmgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=gaeHmgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=gaeHmgEACAAJ&dq=%2Bsubject:Adventure&hl=&cd=3&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=gaeHmgEACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Dark_is_Rising.html?hl=&id=gaeHmgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=gaeHmgEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "On his eleventh birthday Will Stanton discovers that he is the last of the Old Ones, destined to seek the six magical Signs that will enable the Old Ones to triumph over the evil forces of the Dark."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "inZhHuo89T8C",
+      "etag": "mBYNMK1+GKk",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/inZhHuo89T8C",
+      "volumeInfo": {
+        "title": "Fantastic Mr. Fox",
+        "authors": [
+          "Roald Dahl"
+        ],
+        "publisher": "Puffin",
+        "publishedDate": "1998",
+        "description": "Three farmers, each one meaner than the other, try all-out warfare to get rid of the fox and his family.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0141301139"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780141301136"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 81,
+        "printType": "BOOK",
+        "categories": [
+          "Juvenile Fiction"
+        ],
+        "averageRating": 4,
+        "ratingsCount": 36,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "2.1.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=inZhHuo89T8C&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=inZhHuo89T8C&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=inZhHuo89T8C&dq=%2Bsubject:Adventure&hl=&cd=4&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=inZhHuo89T8C&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Fantastic_Mr_Fox.html?hl=&id=inZhHuo89T8C"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=inZhHuo89T8C&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Nobody outfoxes Fantastic Mr. Fox! Someone&#39;s been stealing from the three meanest farmers around, and they know the identity of the thief-it&#39;s Fantastic Mr. Fox!"
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "6GE2YAAACAAJ",
+      "etag": "Dv/IbrUNd2k",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/6GE2YAAACAAJ",
+      "volumeInfo": {
+        "title": "The Contest",
+        "authors": [
+          "Gordon Korman"
+        ],
+        "publisher": "Scholastic Paperbacks",
+        "publishedDate": "2012-02",
+        "description": "Dominic, Chris, Perry, Tilt, Sammi, Bryn, and Cameron compete with each other to be selected as part of a team of teenage climbers with the goal of ascending Mount Everest.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0545392322"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780545392327"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 137,
+        "printType": "BOOK",
+        "categories": [
+          "Juvenile Fiction"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=6GE2YAAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=6GE2YAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=6GE2YAAACAAJ&dq=%2Bsubject:Adventure&hl=&cd=5&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=6GE2YAAACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Contest.html?hl=&id=6GE2YAAACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=6GE2YAAACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Dominic, Chris, Perry, Tilt, Sammi, Bryn, and Cameron compete with each other to be selected as part of a team of teenage climbers with the goal of ascending Mount Everest."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "nfRhQgAACAAJ",
+      "etag": "FullTp6blks",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/nfRhQgAACAAJ",
+      "volumeInfo": {
+        "title": "Harry Potter and the Prisoner of Azkaban",
+        "authors": [
+          "J. K. Rowling"
+        ],
+        "publisher": "Bloomsbury Publishing",
+        "publishedDate": "1999",
+        "description": "When Harry and his best friends go back for their third year at Hogwarts, the atmosphere is tense. There's an escaped mass-murderer on the loose and the sinister prison guards of Azkaban have been called in to guard the school. Lessons, however, must go on and there are lots of new subjects in third year - Care of Magical Creatures and Divination among others - to take Harry's mind off things!",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0747546290"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780747546290"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 317,
+        "printType": "BOOK",
+        "categories": [
+          "Adventure"
+        ],
+        "averageRating": 4.5,
+        "ratingsCount": 3,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=nfRhQgAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=nfRhQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=nfRhQgAACAAJ&dq=%2Bsubject:Adventure&hl=&cd=6&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=nfRhQgAACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Prisoner_of_Azkaban.html?hl=&id=nfRhQgAACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=nfRhQgAACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "When Harry and his best friends go back for their third year at Hogwarts, the atmosphere is tense."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "ykqiQgAACAAJ",
+      "etag": "RcEPw9KDPGI",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/ykqiQgAACAAJ",
+      "volumeInfo": {
+        "title": "Nude",
+        "authors": [
+          "Morris Gleitzman",
+          "Paul Jennings"
+        ],
+        "publisher": "Puffin",
+        "publishedDate": "2000",
+        "description": "Amy's mum is missing, her dad's left and she's stuck with a baby she's never seen before. Meanwhile Sprocket has no idea how he ended up all alone in the bush, naked and with no food. But one thing's for sure - being chased around by fiendish little brats isn't going to help him remember anything ...",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0141306017"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780141306018"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 68,
+        "printType": "BOOK",
+        "categories": [
+          "Adventure"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=ykqiQgAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=ykqiQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=ykqiQgAACAAJ&dq=%2Bsubject:Adventure&hl=&cd=7&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=ykqiQgAACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Nude.html?hl=&id=ykqiQgAACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=ykqiQgAACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "Amy&#39;s mum is missing, her dad&#39;s left and she&#39;s stuck with a baby she&#39;s never seen before."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "gh7hAAAAMAAJ",
+      "etag": "CfxR9hJBAkM",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/gh7hAAAAMAAJ",
+      "volumeInfo": {
+        "title": "The Sea of Trolls",
+        "authors": [
+          "Nancy Farmer"
+        ],
+        "publisher": "Atheneum",
+        "publishedDate": "2004-09",
+        "description": "The three-time Newbery Honor-winning author and National Book Award recipient pens a new adventure set in A.D. 793 in the land of the Vikings, where two children are soon swept up in a quest on which they encounter a dragon, a giant spider, and trolls.",
+        "industryIdentifiers": [
+          {
+            "type": "OTHER",
+            "identifier": "UOM:39015059568637"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 459,
+        "printType": "BOOK",
+        "categories": [
+          "Juvenile Fiction"
+        ],
+        "averageRating": 4,
+        "ratingsCount": 28,
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "0.1.1.0.preview.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=gh7hAAAAMAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=gh7hAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=gh7hAAAAMAAJ&dq=%2Bsubject:Adventure&hl=&cd=8&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=gh7hAAAAMAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/The_Sea_of_Trolls.html?hl=&id=gh7hAAAAMAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=gh7hAAAAMAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "The three-time Newbery Honor-winning author and National Book Award recipient pens a new adventure set in A.D. 793 in the land of the Vikings, where two children are soon swept up in a quest on which they encounter a dragon, a giant spider, ..."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "BOX9vQEACAAJ",
+      "etag": "UhgW8vM2rSM",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/BOX9vQEACAAJ",
+      "volumeInfo": {
+        "title": "Guardians of Ga'Hoole #6: The Burning",
+        "authors": [
+          "Kathryn Lasky"
+        ],
+        "publisher": "Scholastic Inc.",
+        "publishedDate": "2004",
+        "description": "A Great Battle is on the horizon and drawing near. In preparation, Soren and his band must fly to the mysterious Northern Kingdom to find allies and study the grim art of war.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "0439405629"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9780439405621"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 210,
+        "printType": "BOOK",
+        "categories": [
+          "Adventure"
+        ],
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=BOX9vQEACAAJ&dq=%2Bsubject:Adventure&hl=&cd=9&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=BOX9vQEACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Guardians_of_Ga_Hoole_6_The_Burning.html?hl=&id=BOX9vQEACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=BOX9vQEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "A Great Battle is on the horizon and drawing near. In preparation, Soren and his band must fly to the mysterious Northern Kingdom to find allies and study the grim art of war."
+      }
+    },
+    {
+      "kind": "books#volume",
+      "id": "OmdozgEACAAJ",
+      "etag": "TQN1NHfALe4",
+      "selfLink": "https://www.googleapis.com/books/v1/volumes/OmdozgEACAAJ",
+      "volumeInfo": {
+        "title": "Rainbow Magic: Carmen the Cheerleading Fairy",
+        "subtitle": "Special",
+        "authors": [
+          "Daisy Meadows"
+        ],
+        "publisher": "Orchard Books",
+        "publishedDate": "2022-04-14",
+        "description": "Join Rachel and Kirsty as they meet Carmen the Cheerleading fairy and help her to save the Cove City cheerleading competition! When Kirsty takes part in the Cove City cheerleading competition, everything goes wrong! Cheerleaders forget how to work together, lose their confidence and don't practise their routines safely. Jack Frost has stolen Carmen the Cheerleading Fairy's magical objects and caused all this mayhem! Can Rachel and Kirsty help Carmen to get her magical objects back before the competition is ruined? Rainbow Magic is the perfect stepping stone for children to become independent readers. With black and white illustrations, short chapters and lots of books to collect, these books are really accessible for children aged 5+. 'These stories are magic; they turn children into readers!' ReadingZone.com Do YOU have a Rainbow Magic fairy? Find a fairy with your name at https://orchardseriesbooks.co.uk/rainbow-magic/ and collect all the books in the range.",
+        "industryIdentifiers": [
+          {
+            "type": "ISBN_10",
+            "identifier": "1408364522"
+          },
+          {
+            "type": "ISBN_13",
+            "identifier": "9781408364529"
+          }
+        ],
+        "readingModes": {
+          "text": false,
+          "image": false
+        },
+        "pageCount": 160,
+        "printType": "BOOK",
+        "maturityRating": "NOT_MATURE",
+        "allowAnonLogging": false,
+        "contentVersion": "preview-1.0.0",
+        "panelizationSummary": {
+          "containsEpubBubbles": false,
+          "containsImageBubbles": false
+        },
+        "imageLinks": {
+          "smallThumbnail": "http://books.google.com/books/content?id=OmdozgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+          "thumbnail": "http://books.google.com/books/content?id=OmdozgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+        },
+        "language": "en",
+        "previewLink": "http://books.google.ru/books?id=OmdozgEACAAJ&dq=%2Bsubject:Adventure&hl=&cd=10&source=gbs_api",
+        "infoLink": "http://books.google.ru/books?id=OmdozgEACAAJ&dq=%2Bsubject:Adventure&hl=&source=gbs_api",
+        "canonicalVolumeLink": "https://books.google.com/books/about/Rainbow_Magic_Carmen_the_Cheerleading_Fa.html?hl=&id=OmdozgEACAAJ"
+      },
+      "saleInfo": {
+        "country": "RU",
+        "saleability": "NOT_FOR_SALE",
+        "isEbook": false
+      },
+      "accessInfo": {
+        "country": "RU",
+        "viewability": "NO_PAGES",
+        "embeddable": false,
+        "publicDomain": false,
+        "textToSpeechPermission": "ALLOWED",
+        "epub": {
+          "isAvailable": false
+        },
+        "pdf": {
+          "isAvailable": false
+        },
+        "webReaderLink": "http://play.google.com/books/reader?id=OmdozgEACAAJ&hl=&source=gbs_api",
+        "accessViewStatus": "NONE",
+        "quoteSharingAllowed": false
+      },
+      "searchInfo": {
+        "textSnippet": "With black and white illustrations, short chapters and lots of books to collect, these books are really accessible for children aged 5+. &#39;These stories are magic; they turn children into readers!"
+      }
+    }
+  ]
+}

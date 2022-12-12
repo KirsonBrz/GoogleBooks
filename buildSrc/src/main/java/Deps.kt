@@ -156,5 +156,10 @@ object Deps {
         "androidx.compose.ui:ui-test-junit4:$composeVersion"
     const val debugImplementation = "androidx.compose.ui:ui-tooling:$composeVersion"
 
+    //MockWebServer
+    const val testImplementationMockWebServer = "com.squareup.okhttp3:mockwebserver:4.10.0"
+
+    //Truth
+    const val testImplementationTruth = "com.google.truth:truth:1.1.3"
 
 }
