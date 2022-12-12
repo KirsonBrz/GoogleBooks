@@ -19,7 +19,7 @@ class BooksDataSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BookDomainModel> {
         return try {
-            val nextPageNumber = params.key ?: 1
+            val nextPageNumber = params.key ?: 0
 
             val response = homeModel.loadBooksByIndex(nextPageNumber * pageSize)
 

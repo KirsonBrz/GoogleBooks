@@ -61,6 +61,8 @@ dependencies {
 
     // Test
     testImplementation Deps.testImplementationJunit
+    testImplementation Deps.testImplementationTruth
+    testImplementation Deps.testImplementationMockWebServer
 
 
 }
