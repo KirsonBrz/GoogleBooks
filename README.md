@@ -5,6 +5,15 @@
 Тестовое задание для компании Subtotal
 
 
+<h3 align="left">Полное превью</h3>
+
+
+
+
+https://user-images.githubusercontent.com/52128742/207201427-f774df72-5a4b-4a51-bb0a-2f11d9153074.mp4
+
+
+
 <h1 align="left">Стэк </h1>
 
 - MVVM Clean Architecture project
@@ -75,11 +84,5 @@ III
 ![time](https://user-images.githubusercontent.com/52128742/207202588-316f7c34-407e-4378-ade2-ab15f0e3e74f.png)
 
 
-<h3 align="left">Полное превью</h3>
-
-
-
-
-https://user-images.githubusercontent.com/52128742/207201427-f774df72-5a4b-4a51-bb0a-2f11d9153074.mp4
 
 
